@@ -10,3 +10,11 @@ def trending_embed(ctx, title, description, image, rating):
 
 	return embed
 
+
+def movie_embed(ctx, title, description, image, rating):
+	embed = discord.Embed(title=title, description = ":star"+str(rating), color = 0xD2386C)
+	embed.add_field(title="Description", value=description, inline=False)
+	embed.set_thumbnail(url=image)
+	embed.set_footer("requested by {}".format(ctx.author.dispaly_name))
+	return embed
+
