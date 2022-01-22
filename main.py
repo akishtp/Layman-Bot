@@ -2,8 +2,10 @@ import os
 from discord.ext import commands
 import json
 import requests
-from embed import *
-from reactions import *
+from embed import trending_embed
+from embed import search_embed
+from embed import movie_embed
+from reactions import menu_react
 from search import search_movies
 
 bot = commands.Bot(command_prefix="!")
@@ -53,18 +55,26 @@ async def trending(ctx: commands.Context):
 async def search(ctx: commands.Context, arg):
     j=0
     movie = search_movies(arg)
-    msg = await ctx.send(movie[0][j])
+    print(movie[0][j], movie[3][j])
+    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
     await menu_react(msg, len(movie[0][j]), j)
     def check(reaction, user):
       return user == ctx.author and str(reaction.emoji) in reactions
     while True:
-      reaction, user = await bot.wait_for("reaction_add", timeout=25.0,check=check)
-      if str(reaction.emoji) == reactions[0]:
-        j-=1
-        await msg.edit(content=movie[0][j])
-      elif str(reaction.emoji) == reactions[-1]:
-        j+=1
-        await msg.edit(content=movie[0][j])
+      try:
+        reaction, user = await bot.wait_for("reaction_add", timeout=25.0,check=check)
+        if str(reaction.emoji) == reactions[0]:
+          j-=1
+          msg = await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+        elif str(reaction.emoji) == reactions[-1]:
+          j+=1
+          msg = await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+        elif str(reaction.emoji) == reactions[2] or reactions[3] or reactions[4] or reactions[5]:
+          for i in range(2,6):
+            if reaction[i] == string(reaction.emoji):
+              await ctx.send(embed = movie_embed(ctx, movie[0][j][i], movie[1][j][i], movie[2][j][i], movie[3][j][i]))
+      except:
+        print("Timed out")
       
 
 @bot.command(name="ping")

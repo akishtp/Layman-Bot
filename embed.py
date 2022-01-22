@@ -21,8 +21,8 @@ def movie_embed(ctx, title, description, image, rating):
 arr=["zero","one","two","three","four","five","six","seven","eight","nine"]
  
 def search_embed(ctx, arg, title, rating):
-	embed = discord.Embed(title = "Query results: "+arg, color=0x0072B5)
+	embed = discord.Embed(title = "Query results: "+arg, url="", description="Search results", color = 0xFCBA03)
 	embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
 	for i in range(len(title)):
-		embed.add_field(name=":"+arr[i+1]+": "+title[i]+"/t:star:"+str(rating[i]))
+		embed.add_field(name=":"+arr[i+1]+": "+title[i]+"/t:star:"+str(rating[i]), value = "", inline=False)
 		
