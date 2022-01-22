@@ -70,16 +70,16 @@ async def search(ctx: commands.Context, arg):
           j+=1
           msg = await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
         elif str(reaction.emoji) == reactions[2] or reactions[3] or reactions[4] or reactions[5]:
-          for i in range(2,6):
-            if reaction[i] == string(reaction.emoji):
-              await ctx.send(embed = movie_embed(ctx, movie[0][j][i], movie[1][j][i], movie[2][j][i], movie[3][j][i]))
+          for i in range(1,6):
+            if reactions[i] == str(reaction.emoji):
+              await ctx.send(embed = movie_embed(ctx, movie[0][j][i-1], movie[1][j][i-1], movie[2][j][i-1], movie[3][j][i-1]))
       except:
         print("Timed out")
       
 
 @bot.command(name="ping")
 async def ping(ctx):
-    await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
+    await ctx.send(':ping_pong:\tpong {0}'.format(round(bot.latency, 3)))
 
 
 token = os.environ['NOT_TOKEN']
