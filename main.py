@@ -11,7 +11,6 @@ api_key = os.environ['API_KEY']
 def trending_movies():
     title=[]
     desc=[]
-    pic=[]
     trending=[]
     rating = []
     response = requests.get(
@@ -23,10 +22,12 @@ def trending_movies():
       except:
         title.append(json_data['results'][i]['name'])
       desc.append(json_data['results'][i]['overview'])
-      pic.append(json_data['results'][i]['poster_path'])
+      pic_path=json_data['results'][0]['poster_path']
+      pic="https://image.tmdb.org/t/p/w500"+pic_path
       rating.append(json_data['results'][i]['vote_average'])
     trending = [title, desc, pic, rating]
     return trending
+
 
 
 @bot.command(name="hello")
