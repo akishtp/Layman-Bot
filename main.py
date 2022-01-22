@@ -8,6 +8,7 @@ from search import search_movies
 
 bot = commands.Bot(command_prefix="!")
 api_key = os.environ['API_KEY']
+reactions = ["⬅️","1⃣", "2⃣", "3⃣", "4⃣", "➡️"]
 
 
 def trending_movies():
@@ -50,10 +51,21 @@ async def trending(ctx: commands.Context):
 
 @bot.command(name="search")
 async def search(ctx: commands.Context, arg):
+    j=0
     movie = search_movies(arg)
-    msg = await ctx.send_message(len(movie[0]))
-    menu_react(ctx, len(movie[0]), msg, 0)
-
+    msg = await ctx.send(movie[0][j])
+    await menu_react(msg, len(movie[0][j]), j)
+    def check(reaction, user):
+      return user == ctx.author and str(reaction.emoji) in reactions
+    while True:
+      reaction, user = await bot.wait_for("reaction_add", timeout=25.0,check=check)
+      if str(reaction.emoji) == reactions[0]:
+        j-=1
+        await msg.edit(content=movie[0][j])
+      elif str(reaction.emoji) == reactions[-1]:
+        j+=1
+        await msg.edit(content=movie[0][j])
+      
 
 @bot.command(name="ping")
 async def ping(ctx):
