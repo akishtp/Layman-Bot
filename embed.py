@@ -7,4 +7,5 @@ def embed(ctx, title, description, image):
 		embed.add_field(name=title[i], value=description[i], inline=False)
 	embed.set_footer(text="Information requested by {}".format(ctx.author.display_name))
 
+	return embed
 
