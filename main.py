@@ -1,39 +1,35 @@
 import os
-import discord
+from discord.ext import commands
 import json
 import requests
 
-client = discord.Client()
+bot = commands.Bot(command_prefix="!")
 api_key = os.environ['API_KEY']
 
 
 def trending_movies():
+    movies=[]
     response = requests.get(
         "https://api.themoviedb.org/3/trending/all/day?api_key=" + api_key)
     json_data = json.loads(response.text)
-    trending = json_data['results'][0]['original_title']
-    return (trending)
+    for i in range(2):
+      trending = json_data['results'][i]['title'or'name']
+      movies.append(trending)
+    return (movies)
 
 
-@client.event
-async def on_ready():
-    print('{0.user} is running. Catch him.'.format(client))
+@bot.command(name="hello")
+async def hello_world(ctx: commands.Context):
+    await ctx.send("Hello, world!")
 
+@bot.command(name="trending")
+async def trending(ctx: commands.Context):
+    movie = trending_movies()
+    await ctx.send(movie)
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@bot.command(name="ping")
+async def ping(ctx):
+    await ctx.send('Pong! {0}'.format(round(bot.latency, 1)))
 
-    msg = message.content
-
-    if msg.startswith('$hello'):
-        await message.channel.send("Hello")
-
-    if msg.startswith('$trending'):
-        movie = trending_movies()
-        await message.channel.send(movie)
-
-
-my_secret = os.environ['NOT_TOKEN']
-client.run(my_secret)
+token = os.environ['NOT_TOKEN']
+bot.run(token)
