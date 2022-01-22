@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 import requests
 from embed import *
+from reactions import *
 from search import search_movies
 
 bot = commands.Bot(command_prefix="!")
@@ -50,7 +51,8 @@ async def trending(ctx: commands.Context):
 @bot.command(name="search")
 async def search(ctx: commands.Context, arg):
     movie = search_movies(arg)
-    await ctx.send(len(movie[0]))
+    msg = await ctx.send_message(len(movie[0]))
+    menu_react(ctx, len(movie[0]), msg, 0)
 
 
 @bot.command(name="ping")

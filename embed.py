@@ -18,8 +18,9 @@ def movie_embed(ctx, title, description, image, rating):
 	embed.set_footer("requested by {}".format(ctx.author.dispaly_name))
 	return embed
 
+arr=["zero","one","two","three","four","five","six","seven","eight","nine"]
+ 
 def search_embed(ctx, arg, title, rating):
-	arr=["zero","one","two","three","four","five","six","seven","eight","nine"]
 	embed = discord.Embed(title = "Query results: "+arg, color=0x0072B5)
 	embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
 	for i in range(len(title)):
