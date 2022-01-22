@@ -10,3 +10,18 @@ def trending_embed(ctx, title, description, image, rating):
 
 	return embed
 
+
+def movie_embed(ctx, title, description, image, rating):
+	embed = discord.Embed(title=title, description = ":star"+str(rating), color = 0xD2386C)
+	embed.add_field(title="Description", value=description, inline=False)
+	embed.set_thumbnail(url=image)
+	embed.set_footer("requested by {}".format(ctx.author.dispaly_name))
+	return embed
+
+def search_embed(ctx, arg, title, rating):
+	arr=["zero","one","two","three","four","five","six","seven","eight","nine"]
+	embed = discord.Embed(title = "Query results: "+arg, color=0x0072B5)
+	embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+	for i in range(len(title)):
+		embed.add_field(name=":"+arr[i+1]+": "+title[i]+"/t:star:"+str(rating[i]))
+		
