@@ -1,4 +1,7 @@
 # Layman-Bot
+###Layman
+[^1]:--a non-ordained male member of a Church--
+[^2]:a person without professional or specialized knowledge in a particular subject.
 Layman is a [Discord](https://discord.com) bot that specializes in searching movies and also shows you what movies are trending right now.
 
 ## Support server
