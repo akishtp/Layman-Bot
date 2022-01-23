@@ -59,6 +59,10 @@ async def trending(ctx:commands.Context,type,genre):
         category=collect_movie_category()
         await ctx.send(embed=category_help_embed(ctx, category,))
 
+@bot.command(name="invite")
+async def create_invite(ctx: commands.Context):
+  link = await ctx.channel.create_invite(temporary=False,unique=True, reason=None)
+  await ctx.send(link)
 
 @bot.command(name="search")
 async def search(ctx: commands.Context, arg):
