@@ -41,3 +41,7 @@ def genre_search(ctx, arg, title, rating):
     embed.add_field(name=":"+arr[i+1]+": "+title[i],value = ":star:\t"+str(rating[i]), inline=False)
   return embed
 
+def no_results(ctx,arg):
+    embed = discord.Embed(title="Query not found", url="", description=arg, color = 0x000000)
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+    return embed
