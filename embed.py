@@ -54,8 +54,8 @@ def search_embed(ctx, arg, title, rating):
 def discover_help_embed(ctx):
     movie_category = collect_movie_category()
     tv_category = collect_tv_category()
-    embed = discord.Embed(title="Availabe Categories",
-                          description="Use this to discover new Movies",
+    embed = discord.Embed(title="Help Discover",
+                          description="FORMAT: !discover <type> <genre> <sort by> <sort order>",
                           color=0xFCBA03)
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
