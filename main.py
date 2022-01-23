@@ -6,8 +6,10 @@ from embed import trending_embed
 from embed import search_embed
 from embed import movie_embed
 from embed import discover_help_embed
+from embed import genre_search
 from reactions import menu_react
 from search import search_movies
+from genre import listing_category
 
 bot = commands.Bot(command_prefix="!", help_command=None)
 api_key = os.environ['API_KEY']
@@ -52,12 +54,18 @@ async def trending(ctx: commands.Context):
     except:
         await ctx.send("Not Found!")
 
-
+@bot.command(name="discover")
+async def discover(ctx: commands.Context,content_type,genre,sort,order):
+  try:
+    j = 0
+    movie = search_movies(arg)
+    print(movie[0][j], movie[3][j])
+    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+    
 @bot.command(name="help")
 async def help(ctx: commands.Context, arg):
     if arg.lower() == "discover":
-      await ctx.send(embed=discover_help_embed(ctx))
-      
+        await ctx.send(embed=discover_help_embed(ctx))
 
 
 @bot.command(name="invite")
