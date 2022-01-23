@@ -33,3 +33,11 @@ def category_help_embed(ctx,category,id):
 	for i in range(len(category)):
 		embed.add_field(name=category[i],value=id[i],inline=False)
 	return embed
+
+def genre_search(ctx, arg, title, rating):
+  embed = discord.Embed(title="Discover new movies", url="", description=arg, color = 0xFFFFFF)
+  embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+  for i in range(len(title)):
+    embed.add_field(name=":"+arr[i+1]+": "+title[i],value = ":star:\t"+str(rating[i]), inline=False)
+  return embed
+
