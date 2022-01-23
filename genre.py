@@ -30,12 +30,9 @@ def listing_category(content_type, sort, order, genre):
         if genre_list[0][i].lower() == genre.lower():
           genre_id = genre_list[1][i]
     elif content_type == "tv":
-      print("inside elif")
       genre_list=collect_tv_category()
       for i in range(size):
-        print(genre_list[0][i])
         if genre_list[0][i].lower() == genre.lower():
-          print(genre_list[1][i])
           genre_id = genre_list[1][i]
     else:
       return
@@ -80,7 +77,6 @@ def listing_category(content_type, sort, order, genre):
         if (i > 0) and (i % 19 == 0):
             page += 1
             k = -1
-            print("Page increased")
             response = requests.get(
                 "https://api.themoviedb.org/3/discover/" + content_type + "?api_key=" +
                 api_key + "&language=en-US&sort_by=" + sort + "." + order +

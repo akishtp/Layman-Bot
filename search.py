@@ -47,13 +47,11 @@ def search_movies(term):
         if (i > 0) and (i % 19 == 0):
             page += 1
             k = -1
-            print("Page increased")
             response = requests.get(
                 "https://api.themoviedb.org/3/search/movie?api_key=" +
                 api_key + "&language=en-US&query=" + term + "&page=" +
                 str(page) + "&include_adult=false")
             json_data = json.loads(response.text)
-        print(k, i)
         k += 1
         i += 1
     title.append(title_small)

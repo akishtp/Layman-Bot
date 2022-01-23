@@ -10,7 +10,7 @@ from embed import discover_embed
 from reactions import menu_react
 from search import search_movies
 from genre import listing_category
-from discord.ext.commands import CommandNotFound
+from discord.ext.commands import CommandNotFound,MissingRequiredArgument
 
 bot = commands.Bot(command_prefix="!", help_command=None)
 api_key = os.environ['API_KEY']
@@ -57,10 +57,9 @@ async def trending(ctx: commands.Context):
 
 @bot.command(name="discover")
 async def discover(ctx: commands.Context,content_type,genre,sort,order):
-  try:
+  # try:
       j = 0
       movie = listing_category(content_type,sort,order,genre)
-      print(movie[0][j], movie[3][j])
       msg = await ctx.send(embed=discover_embed(ctx, genre, movie[0][j], movie[3][j]))
 
       await menu_react(msg, len(movie[0][j]), j)
@@ -73,12 +72,10 @@ async def discover(ctx: commands.Context,content_type,genre,sort,order):
               if str(reaction.emoji) == reactions[0]:
                   if j != 0:
                       j -= 1
-                      print(j)
                       await msg.edit(
                           embed=discover_embed(ctx, genre, movie[0][j], movie[3][j]))
               elif str(reaction.emoji) == reactions[-1]:
                   j += 1
-                  print(j)
                   await msg.edit(
                       embed=discover_embed(ctx, genre, movie[0][j], movie[3][j]))
               elif str(
@@ -92,8 +89,8 @@ async def discover(ctx: commands.Context,content_type,genre,sort,order):
           except:
               print("Timed out")
               break
-  except:
-      await ctx.send(embed=no_results(ctx,genre))
+  # except:
+      # await ctx.send(embed=no_results(ctx,"check `!help discover` for help"))
 
     
 @bot.command(name="help")
@@ -106,7 +103,8 @@ async def help(ctx: commands.Context, arg):
 
 @bot.command(name="invite")
 async def create_invite(ctx: commands.Context):
-    link = await ctx.channel.create_invite(temporary=False,unique=True,reason=None)
+    # link = await ctx.channel.create_invite(temporary=False,unique=True,reason=None)
+    link="https://discord.com/api/oauth2/authorize?client_id=934308493761069068&permissions=534723946560&scope=bot"
     await ctx.send(link)
 
 
@@ -114,7 +112,6 @@ async def create_invite(ctx: commands.Context):
 async def search(ctx: commands.Context, arg):
     j = 0
     movie = search_movies(arg)
-    print(movie[0][j], movie[3][j])
     msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
     await menu_react(msg, len(movie[0][j]), j)
 
@@ -127,12 +124,10 @@ async def search(ctx: commands.Context, arg):
             if str(reaction.emoji) == reactions[0]:
                 if j != 0:
                     j -= 1
-                    print(j)
                     await msg.edit(
                         embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
             elif str(reaction.emoji) == reactions[-1]:
                 j += 1
-                print(j)
                 await msg.edit(
                     embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
             elif str(
@@ -152,12 +147,13 @@ async def search(ctx: commands.Context, arg):
 async def ping(ctx):
     await ctx.send(':ping_pong:\tpong {0}'.format(round(bot.latency, 3)))
 
-
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
         await ctx.send("Command not found! use `!help me` to see all available commands")
-        
+    elif isinstance(error, MissingRequiredArgument):
+      await ctx.send("command requires more arguements use `!help me`")
+
 
 token = os.environ['NOT_TOKEN']
 bot.run(token)

@@ -92,7 +92,7 @@ def no_results(ctx,arg):
 
 def help_embed(ctx, bot):
     cmds = []
-    des = ["Find all commands of the bot","say hello to the bot :wave:","Find what movies are trending eight now!", "discover new movies", "Create an invite link to he channel", "search for a movie", "Play ping pong with the bot"]
+    des = ["say hello to the bot :wave:","Find what movies are trending eight now!", "discover new movies. Use `!help discover` for more details", "Find all commands of the bot", "Invite Me to your server", "search for a movie", "Play ping pong with the bot"]
     for commands in bot.all_commands:
         cmds.append(commands)
     embed = discord.Embed(title="List of commands", url="", description="Commands you can use" , color= 0xFF5431)
