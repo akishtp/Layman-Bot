@@ -10,6 +10,7 @@ from embed import discover_embed
 from reactions import menu_react
 from search import search_movies
 from genre import listing_category
+from discord.ext.commands import CommandNotFound
 
 bot = commands.Bot(command_prefix="!", help_command=None)
 api_key = os.environ['API_KEY']
@@ -151,6 +152,12 @@ async def search(ctx: commands.Context, arg):
 async def ping(ctx):
     await ctx.send(':ping_pong:\tpong {0}'.format(round(bot.latency, 3)))
 
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        ctx.send("Command not found! use `!help` to see all available commands")
+        
 
 token = os.environ['NOT_TOKEN']
 bot.run(token)
