@@ -27,3 +27,9 @@ def search_embed(ctx, arg, title, rating):
 		embed.add_field(name=":"+arr[i+1]+": "+title[i]+"/t:star:", value = str(rating[i]), inline=False)
 	return embed
 
+def category_help_embed(ctx,category):
+	embed = discord.EMbed(title="Availabe Categories", description="Use this to discover new Movies", color = 0xFCBA03)
+	embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+	for i in range(len(category)):
+		embed.add_field(name=category[i],inline=True)
+	return embed
