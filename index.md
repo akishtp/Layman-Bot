@@ -1,37 +1,23 @@
 ## Layman Bot
 
-[Invite](https://github.com/imakish/Layman-Bot/edit/gh-pages/index.md) him to your server.
+## Layman
+/ˈleɪmən/<br/>
+_noun_<br/>
+_plural noun_ __Laymen__<br/>
+* ~~a non-ordained male member of a Church.~~
+* __a person without professional or specialized knowledge in a particular subject.✅__
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Layman is a Discord bot that specializes in Movies and TV.
 
-### Markdown
+[Invite](https://discord.com/api/oauth2/authorize?client_id=934308493761069068&permissions=534723946560&scope=bot) him to your server.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Commands
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/imakish/Layman-Bot/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+use command ```!help me``` for a list all available commands.
+use command ```!trending``` to list Movies/TV-shows Trending right-now.
+use command ```!discover <content_type> <genre> <sort by> <sort order>``` to discover new Movies/Tv-shows to watch. for more help use ```!help discover```.
+use command ```!search <search term>``` to search for Movies/TV-series.
 
 ### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Having trouble with Layman? Join Layman's [Support Server](https://discord.gg/KqGUtNwQE4) we’ll help you sort it out.
