@@ -156,7 +156,7 @@ async def ping(ctx):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
-        ctx.send("Command not found! use `!help` to see all available commands")
+        await ctx.send("Command not found! use `!help me` to see all available commands")
         
 
 token = os.environ['NOT_TOKEN']
