@@ -8,11 +8,12 @@ from embed import movie_embed
 from embed import category_help_embed
 from reactions import menu_react
 from search import search_movies
+from genre import collect_tv_category
 from genre import collect_movie_category
 
 bot = commands.Bot(command_prefix="!")
 api_key = os.environ['API_KEY']
-reactions = ["⬅️","1⃣", "2⃣", "3⃣", "4⃣", "➡️"]
+reactions = ["⬅️", "1⃣", "2⃣", "3⃣", "4⃣", "➡️"]
 
 
 def trending_movies():
@@ -30,10 +31,10 @@ def trending_movies():
             title.append(json_data['results'][i]['name'])
         desc.append(json_data['results'][i]['overview'])
         try:
-          pic_path = json_data['results'][0]['poster_path']
-          pic = "https://image.tmdb.org/t/p/w500" + pic_path
+            pic_path = json_data['results'][0]['poster_path']
+            pic = "https://image.tmdb.org/t/p/w500" + pic_path
         except:
-          pic="https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg"
+            pic = "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg"
         rating.append(json_data['results'][i]['vote_average'])
     trending = [title, desc, pic, rating]
     return trending
@@ -47,52 +48,75 @@ async def hello_world(ctx: commands.Context):
 @bot.command(name="trending")
 async def trending(ctx: commands.Context):
     try:
-      movie = trending_movies()
-      await ctx.send(embed=trending_embed(ctx, movie[0], movie[1], movie[2], movie[3]))
+        movie = trending_movies()
+        await ctx.send(
+            embed=trending_embed(ctx, movie[0], movie[1], movie[2], movie[3]))
     except:
-      await ctx.send("Not Found!")
+        await ctx.send("Not Found!")
+
 
 @bot.command(name="discover")
-async def trending(ctx:commands.Context,type,genre):
-    if type.lower()=="tv":
-      if genre.lower()=="--help":
-        category=collect_movie_category()
-        await ctx.send(embed=category_help_embed(ctx, category,))
+async def discover(ctx: commands.Context, type, genre):
+    if type.lower() == "tv":
+        if genre.lower() == "--help":
+            category = collect_tv_category()
+            await ctx.send(
+                embed=category_help_embed(ctx, category[0], category[1]))
+    elif type.lower() == "movie":
+        if genre.lower() == "--help":
+            category = collect_movie_category()
+            await ctx.send(
+                embed=category_help_embed(ctx, category[0], category[1]))
+
 
 @bot.command(name="invite")
 async def create_invite(ctx: commands.Context):
-  link = await ctx.channel.create_invite(temporary=False,unique=True, reason=None)
-  await ctx.send(link)
+    link = await ctx.channel.create_invite(temporary=False,
+                                           unique=True,
+                                           reason=None)
+    await ctx.send(link)
+
 
 @bot.command(name="search")
 async def search(ctx: commands.Context, arg):
-    j=0
+    j = 0
     movie = search_movies(arg)
     print(movie[0][j], movie[3][j])
-    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j])
+                         )
     await menu_react(msg, len(movie[0][j]), j)
+
     def check(reaction, user):
-      return user == ctx.author and str(reaction.emoji) in reactions
+        return user == ctx.author and str(reaction.emoji) in reactions
+
     while True:
-      try:
-        reaction, user = await bot.wait_for("reaction_add", timeout=25.0,check=check)
-        if str(reaction.emoji) == reactions[0]:
-          if j != 0 :
-            j -= 1
-            print(j)
-            await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
-        elif str(reaction.emoji) == reactions[-1]:
-          j+=1
-          print(j)
-          await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
-        elif str(reaction.emoji) == reactions[2] or reactions[3] or reactions[4] or reactions[5]:
-          for i in range(1,6):
-            if reactions[i] == str(reaction.emoji):
-              await ctx.send(embed = movie_embed(ctx, movie[0][j][i-1], movie[1][j][i-1], movie[2][j][i-1], movie[3][j][i-1]))
-      except:
-        print("Timed out")
-        break
-      
+        try:
+            reaction, user = await bot.wait_for("reaction_add",
+                                                timeout=25.0,
+                                                check=check)
+            if str(reaction.emoji) == reactions[0]:
+                if j != 0:
+                    j -= 1
+                    print(j)
+                    await msg.edit(
+                        embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+            elif str(reaction.emoji) == reactions[-1]:
+                j += 1
+                print(j)
+                await msg.edit(
+                    embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+            elif str(
+                    reaction.emoji
+            ) == reactions[2] or reactions[3] or reactions[4] or reactions[5]:
+                for i in range(1, 6):
+                    if reactions[i] == str(reaction.emoji):
+                        await ctx.send(embed=movie_embed(
+                            ctx, movie[0][j][i - 1], movie[1][j][i - 1],
+                            movie[2][j][i - 1], movie[3][j][i - 1]))
+        except:
+            print("Timed out")
+            break
+
 
 @bot.command(name="ping")
 async def ping(ctx):

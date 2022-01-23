@@ -15,7 +15,8 @@ def collect_movie_category():
     for i in range(size):
         movie_category.append(json_data['genres'][i]['name'])
         movie_category_id.append(json_data['genres'][i]['id'])
-    return (movie_category)
+    categorid=[movie_category,movie_category_id]
+    return (categorid)
 
 
 def collect_tv_category():
@@ -29,7 +30,5 @@ def collect_tv_category():
     for i in range(size):
         tv_category.append(json_data['genres'][i]['name'])
         tv_category_id.append(json_data['genres'][i]['id'])
-    return (tv_category)
-
-
-print(collect_movie_category())
+    categorid=[tv_category,tv_category_id]
+    return (categorid)

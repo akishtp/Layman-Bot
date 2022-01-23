@@ -24,12 +24,12 @@ def search_embed(ctx, arg, title, rating):
 	embed = discord.Embed(title = "Query results: "+arg, url="", description="Search results", color = 0xFCBA03)
 	embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
 	for i in range(len(title)):
-		embed.add_field(name=":"+arr[i+1]+": "+title[i], value = "/t:star:"+str(rating[i]), inline=False)
+		embed.add_field(name=":"+arr[i+1]+": "+title[i], value = ":star:\t"+str(rating[i]), inline=False)
 	return embed
 
-def category_help_embed(ctx,category):
-	embed = discord.EMbed(title="Availabe Categories", description="Use this to discover new Movies", color = 0xFCBA03)
+def category_help_embed(ctx,category,id):
+	embed = discord.Embed(title="Availabe Categories", description="Use this to discover new Movies", color = 0xFCBA03)
 	embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
 	for i in range(len(category)):
-		embed.add_field(name=category[i],inline=True)
+		embed.add_field(name=category[i],value=id[i],inline=False)
 	return embed
