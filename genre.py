@@ -20,7 +20,17 @@ def collect_movie_category():
     return (categorid)
 
 
-def listing_category(content_type, sort, order, genre_id):
+def listing_category(content_type, sort, order, genre):
+    if content_type.lower() == "movie":
+      genre_list=collect_movie_category()
+      for i in range(len(genre_list)):
+        if genre_list[0][i].lower == genre:
+          genre_id = genre_list[1][i]
+    elif content_type.lower() == "tv":
+      genre_list=collect_tv_category()
+      for i in range(len(genre_list)):
+        if genre_list[0][i].lower == genre:
+          genre_id = genre_list[1][i]
     title = []
     title_small = []
     desc = []

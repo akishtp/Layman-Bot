@@ -58,7 +58,7 @@ async def trending(ctx: commands.Context):
 async def discover(ctx: commands.Context,content_type,genre,sort,order):
 	try:
 	    j = 0
-	    movie = search_movies(arg)
+	    movie = search_movies(content_type,sort,order,genre)
 	    print(movie[0][j], movie[3][j])
 	    msg = await ctx.send(embed=search_embed(ctx, genre, movie[0][j], movie[3][j]))
 	except:
