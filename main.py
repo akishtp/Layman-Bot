@@ -64,17 +64,21 @@ async def search(ctx: commands.Context, arg):
       try:
         reaction, user = await bot.wait_for("reaction_add", timeout=25.0,check=check)
         if str(reaction.emoji) == reactions[0]:
-          j-=1
-          msg = await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+          if j != 0 :
+            j -= 1
+            print(j)
+            await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
         elif str(reaction.emoji) == reactions[-1]:
           j+=1
-          msg = await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+          print(j)
+          await msg.edit(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
         elif str(reaction.emoji) == reactions[2] or reactions[3] or reactions[4] or reactions[5]:
           for i in range(1,6):
             if reactions[i] == str(reaction.emoji):
               await ctx.send(embed = movie_embed(ctx, movie[0][j][i-1], movie[1][j][i-1], movie[2][j][i-1], movie[3][j][i-1]))
       except:
         print("Timed out")
+        break
       
 
 @bot.command(name="ping")
