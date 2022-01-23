@@ -2,7 +2,7 @@ import os
 from discord.ext import commands
 import json
 import requests
-from embed import trending_embed
+from embed import no_results, trending_embed
 from embed import search_embed
 from embed import movie_embed
 from embed import discover_help_embed
@@ -56,11 +56,13 @@ async def trending(ctx: commands.Context):
 
 @bot.command(name="discover")
 async def discover(ctx: commands.Context,content_type,genre,sort,order):
-  try:
-    j = 0
-    movie = search_movies(arg)
-    print(movie[0][j], movie[3][j])
-    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
+	try:
+	    j = 0
+	    movie = search_movies(arg)
+	    print(movie[0][j], movie[3][j])
+	    msg = await ctx.send(embed=search_embed(ctx, genre, movie[0][j], movie[3][j]))
+	except:
+		await ctx.send(embed=no_results(ctx, genre))
     
 @bot.command(name="help")
 async def help(ctx: commands.Context, arg):
@@ -70,9 +72,7 @@ async def help(ctx: commands.Context, arg):
 
 @bot.command(name="invite")
 async def create_invite(ctx: commands.Context):
-    link = await ctx.channel.create_invite(temporary=False,
-                                           unique=True,
-                                           reason=None)
+    link = await ctx.channel.create_invite(temporary=False,unique=True,reason=None)
     await ctx.send(link)
 
 
@@ -90,9 +90,7 @@ async def search(ctx: commands.Context, arg):
 
     while True:
         try:
-            reaction, user = await bot.wait_for("reaction_add",
-                                                timeout=25.0,
-                                                check=check)
+            reaction, user = await bot.wait_for("reaction_add",timeout=25.0,check=check)
             if str(reaction.emoji) == reactions[0]:
                 if j != 0:
                     j -= 1
