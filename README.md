@@ -1,7 +1,9 @@
 # Layman-Bot
 ## Layman
 /ˈleɪmən/
+
 _noun_
+
 _plural noun_ __Laymen__
 * ~~a non-ordained male member of a Church.~~
 * __a person without professional or specialized knowledge in a particular subject.✅__
