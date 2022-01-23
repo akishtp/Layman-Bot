@@ -5,8 +5,8 @@ import requests
 from embed import no_results, trending_embed
 from embed import search_embed
 from embed import movie_embed
-from embed import discover_help_embed
-from embed import genre_search
+from embed import discover_help_embed,help_embed
+from embed import discover_embed
 from reactions import menu_react
 from search import search_movies
 from genre import listing_category
@@ -56,18 +56,47 @@ async def trending(ctx: commands.Context):
 
 @bot.command(name="discover")
 async def discover(ctx: commands.Context,content_type,genre,sort,order):
-	try:
-	    j = 0
-	    movie = search_movies(content_type,sort,order,genre)
-	    print(movie[0][j], movie[3][j])
-	    msg = await ctx.send(embed=search_embed(ctx, genre, movie[0][j], movie[3][j]))
-	except:
-		await ctx.send(embed=no_results(ctx, genre))
+      j = 0
+      movie = listing_category(content_type,sort,order,genre)
+      print(movie[0][j], movie[3][j])
+      msg = await ctx.send(embed=discover_embed(ctx, genre, movie[0][j], movie[3][j]))
+
+      await menu_react(msg, len(movie[0][j]), j)
+      def check(reaction, user):
+          return user == ctx.author and str(reaction.emoji) in reactions
+
+      while True:
+          try:
+              reaction, user = await bot.wait_for("reaction_add",timeout=25.0,check=check)
+              if str(reaction.emoji) == reactions[0]:
+                  if j != 0:
+                      j -= 1
+                      print(j)
+                      await msg.edit(
+                          embed=discover_embed(ctx, genre, movie[0][j], movie[3][j]))
+              elif str(reaction.emoji) == reactions[-1]:
+                  j += 1
+                  print(j)
+                  await msg.edit(
+                      embed=discover_embed(ctx, genre, movie[0][j], movie[3][j]))
+              elif str(
+                      reaction.emoji
+              ) == reactions[2] or reactions[3] or reactions[4] or reactions[5]:
+                  for i in range(1, 6):
+                      if reactions[i] == str(reaction.emoji):
+                          await ctx.send(embed=movie_embed(
+                              ctx, movie[0][j][i - 1], movie[1][j][i - 1],
+                              movie[2][j][i - 1], movie[3][j][i - 1]))
+          except:
+              print("Timed out")
+              break
     
 @bot.command(name="help")
 async def help(ctx: commands.Context, arg):
     if arg.lower() == "discover":
         await ctx.send(embed=discover_help_embed(ctx))
+    elif arg.lower() == "me":
+        await ctx.send(embed=help_embed(ctx,bot))
 
 
 @bot.command(name="invite")

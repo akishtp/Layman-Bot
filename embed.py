@@ -66,11 +66,11 @@ def discover_help_embed(ctx):
                     inline=False)
     embed.add_field(name="Sort-By",
                     value="popularity, release_date, revenue, title, rating")
-    embed.add_field(name="Sort", value="a, d", inline=False)
+    embed.add_field(name="Sort", value="asc, desc", inline=False)
     return embed
 
 
-def genre_search(ctx, arg, title, rating):
+def discover_embed(ctx, arg, title, rating):
     embed = discord.Embed(title="Discover new movies",
                           url="",
                           description=arg,
@@ -90,14 +90,14 @@ def no_results(ctx,arg):
     return embed
 
 
-def help_embed(ctx, arg, bot):
+def help_embed(ctx, bot):
     cmds = []
     des = ["Find all commands of the bot","say hello to the bot :wave:","Find what movies are trending eight now!", "discover new movies", "Create an invite link to he channel", "search for a movie", "Play ping pong with the bot"]
-    for commands in bot.get_allcommands:
+    for commands in bot.all_commands:
         cmds.append(commands)
-    embed = discord.Embed(title="List of commands", url="", description="Bot has " , color= 0xFF5431)
+    embed = discord.Embed(title="List of commands", url="", description="Commands you can use" , color= 0xFF5431)
     embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
     for i in range(len(des)):
-        embed.add_field(name=cmd[i], value=des[i], inline=False)
+        embed.add_field(name=cmds[i], value=des[i], inline=False)
     return embed
     

@@ -4,8 +4,10 @@ import os
 
 api_key = os.environ['API_KEY']
 
+size = 0
 
 def collect_movie_category():
+    global size
     movie_category = []
     movie_category_id = []
     response = requests.get(
@@ -17,20 +19,26 @@ def collect_movie_category():
         movie_category.append(json_data['genres'][i]['name'])
         movie_category_id.append(json_data['genres'][i]['id'])
     categorid = [movie_category, movie_category_id]
-    return (categorid)
+    return categorid
 
 
 def listing_category(content_type, sort, order, genre):
-    if content_type.lower() == "movie":
+    global size
+    if content_type == "movie":
       genre_list=collect_movie_category()
-      for i in range(len(genre_list)):
-        if genre_list[0][i].lower == genre:
+      for i in range(size):
+        if genre_list[0][i].lower() == genre.lower():
           genre_id = genre_list[1][i]
-    elif content_type.lower() == "tv":
+    elif content_type == "tv":
+      print("inside elif")
       genre_list=collect_tv_category()
-      for i in range(len(genre_list)):
-        if genre_list[0][i].lower == genre:
+      for i in range(size):
+        print(genre_list[0][i])
+        if genre_list[0][i].lower() == genre.lower():
+          print(genre_list[1][i])
           genre_id = genre_list[1][i]
+    else:
+      return
     title = []
     title_small = []
     desc = []
@@ -45,11 +53,10 @@ def listing_category(content_type, sort, order, genre):
     response = requests.get(
         "https://api.themoviedb.org/3/discover/" + content_type + "?api_key=" +
         api_key + "&language=en-US&sort_by=" + sort + "." + order +
-        "&include_adult=false&include_video=false&page=1&with_genres=" +
-        genre_id)
+        "&include_adult=false&include_video=false&page=1&with_genres=" + str(genre_id))
     json_data = json.loads(response.text)
     size = json_data['total_results']
-    while i < size:
+    while i < size and i<100:
         try:
             title_small.append(json_data['results'][k]['title'])
         except:
@@ -75,12 +82,11 @@ def listing_category(content_type, sort, order, genre):
             k = -1
             print("Page increased")
             response = requests.get(
-                "https://api.themoviedb.org/3/discover/" + type + "?api_key=" +
+                "https://api.themoviedb.org/3/discover/" + content_type + "?api_key=" +
                 api_key + "&language=en-US&sort_by=" + sort + "." + order +
-                "&include_adult=false&include_video=false&page=" + page +
-                "&with_genres=" + genre_id)
+                "&include_adult=false&include_video=false&page=" + str(page) +
+                "&with_genres=" + str(genre_id))
             json_data = json.loads(response.text)
-        print(k, i)
         k += 1
         i += 1
     title.append(title_small)
@@ -92,6 +98,7 @@ def listing_category(content_type, sort, order, genre):
 
 
 def collect_tv_category():
+    global size
     tv_category = []
     tv_category_id = []
     response = requests.get(
