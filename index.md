@@ -16,8 +16,10 @@ Layman is a Discord bot that specializes in Movies and TV.
 use command ```!help me``` for a list all available commands.\
 use command ```!trending``` to list Movies/TV-shows Trending right-now.\
 use command ```!discover <content_type> <genre> <sort by> <sort order>``` to discover new Movies/Tv-shows to watch. for more help use ```!help discover```.\
-use command ```!search <search term>``` to search for Movies/TV-series.\
+use command ```!search <search term>``` to search for Movies/TV-series.
 
 ### Support or Contact
 
 Having trouble with Layman? Join Layman's [Support Server](https://discord.gg/KqGUtNwQE4) we’ll help you sort it out.
+
+Layman uses [TMDB-API](https://www.themoviedb.org/).
