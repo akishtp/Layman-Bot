@@ -42,7 +42,7 @@ def trending_movies():
 
 @bot.command(name="hello")
 async def hello_world(ctx: commands.Context):
-    await ctx.send("Hello, world!")
+    await ctx.send("Well, hello there!")
 
 
 @bot.command(name="trending")

@@ -92,3 +92,20 @@ def no_results(ctx, arg):
     embed.set_author(name=ctx.author.display_name,
                      icon_url=ctx.author.avatar_url)
     return embed
+def no_results(ctx,arg):
+    embed = discord.Embed(title="Query not found", url="", description=arg, color = 0x000000)
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+    return embed
+
+
+def help_embed(ctx, arg, bot):
+    cmds = []
+    des = ["Find all commands of the bot","say hello to the bot :wave:","Find what movies are trending eight now!", "discover new movies", "Create an invite link to he channel", "search for a movie", "Play ping pong with the bot"]
+    for commands in bot.get_allcommands:
+        cmds.append(commands)
+    embed = discord.Embed(title="List of commands", url="", description="Bot has " , color= 0xFF5431)
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar_url)
+    for i in range(len(des)):
+        embed.add_field(name=cmd[i], value=des[i], inline=False)
+    return embed
+    
