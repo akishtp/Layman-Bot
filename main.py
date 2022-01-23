@@ -52,10 +52,11 @@ async def trending(ctx: commands.Context):
         await ctx.send(
             embed=trending_embed(ctx, movie[0], movie[1], movie[2], movie[3]))
     except:
-        await ctx.send("Not Found!")
+        await ctx.send(embed=no_results(ctx,trending))
 
 @bot.command(name="discover")
 async def discover(ctx: commands.Context,content_type,genre,sort,order):
+  try:
       j = 0
       movie = listing_category(content_type,sort,order,genre)
       print(movie[0][j], movie[3][j])
@@ -90,6 +91,9 @@ async def discover(ctx: commands.Context,content_type,genre,sort,order):
           except:
               print("Timed out")
               break
+  except:
+      await ctx.send(embed=no_results(ctx,genre))
+
     
 @bot.command(name="help")
 async def help(ctx: commands.Context, arg):
