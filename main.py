@@ -81,8 +81,7 @@ async def search(ctx: commands.Context, arg):
     j = 0
     movie = search_movies(arg)
     print(movie[0][j], movie[3][j])
-    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j])
-                         )
+    msg = await ctx.send(embed=search_embed(ctx, arg, movie[0][j], movie[3][j]))
     await menu_react(msg, len(movie[0][j]), j)
 
     def check(reaction, user):
